@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Investment Advisor Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 750px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f4faff;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0 16px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        #adviceOutput {
+            background-color: #eaf2ff;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #007BFF;
+            white-space: pre-line;
+            font-size: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>💹 AI Investment Advisor</h1>
+    <form id="adviceForm">
+        <label>Age:</label>
+        <input type="text" name="age" required>
+
+        <label>Occupation:</label>
+        <input type="text" name="occupation" required>
+
+        <label>Monthly Income (₹):</label>
+        <input type="text" name="monthly_income" required>
+
+        <label>Monthly Expenses (₹):</label>
+        <input type="text" name="monthly_expenses" required>
+
+        <label>Current Savings (₹):</label>
+        <input type="text" name="current_saving" required>
+
+        <label>Investment Goals:</label>
+        <input type="text" name="investment_goals" required>
+
+        <label>Risk Tolerance (1–10):</label>
+        <input type="text" name="risk_tolerance" required>
+
+        <label>Time Horizon (in years):</label>
+        <input type="text" name="time_horizon" required>
+
+        <label>Preferred Investment Type (e.g. Mutual Funds, FDs, Stocks):</label>
+        <input type="text" name="investment_type" required>
+
+        <label>Investment Amount (₹):</label>
+        <input type="text" name="investment_amount" required>
+
+        <label>Other Investments (brief description):</label>
+        <input type="text" name="other_investments">
+
+        <label>Expected Returns (%):</label>
+        <input type="text" name="expected_returns" required>
+
+        <button type="submit">Get Investment Advice</button>
+    </form>
+
+    <h2>📋 Investment Advice:</h2>
+    <div id="adviceOutput">Please fill in your details and click "Get Investment Advice".</div>
+
+    <script>
+        document.getElementById("adviceForm").onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch("/get_advice", {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById("adviceOutput").innerText = result.advice;
+        };
+    </script>
+</body>
+</html>

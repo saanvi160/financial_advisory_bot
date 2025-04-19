@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insurance Advisor Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 750px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f9fbff;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0 16px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #006f99;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        #adviceOutput {
+            background-color: #e8f4ff;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #008CBA;
+            white-space: pre-line;
+            font-size: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🛡️ AI Insurance Advisor</h1>
+    <form id="adviceForm">
+        <label>Age:</label>
+        <input type="text" name="age" required>
+
+        <label>Occupation:</label>
+        <input type="text" name="occupation" required>
+
+        <label>Monthly Income (₹):</label>
+        <input type="text" name="monthly_income" required>
+
+        <label>Monthly Expenses (₹):</label>
+        <input type="text" name="monthly_expenses" required>
+
+        <label>Current Savings (₹):</label>
+        <input type="text" name="current_saving" required>
+
+        <label>Investment Goals:</label>
+        <input type="text" name="investment_goals" required>
+
+        <label>Risk Tolerance (1–10):</label>
+        <input type="text" name="risk_tolerance" required>
+
+        <label>Type of Financial Advice Needed:</label>
+        <select name="advice_type" required>
+            <option value="Life Insurance">Life Insurance</option>
+            <option value="Health Insurance">Health Insurance</option>
+            <option value="Term Plan">Term Plan</option>
+            <option value="ULIP">ULIP</option>
+            <option value="General Advice">General Advice</option>
+        </select>
+
+        <label>Current Financial Products (if any):</label>
+        <input type="text" name="current_financial_products">
+
+        <label>Any Debts or Loans?</label>
+        <select name="debts_loans" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label>If yes, provide debt/loan details:</label>
+        <input type="text" name="debts_loans_details">
+
+        <button type="submit">Get Insurance Advice</button>
+    </form>
+
+    <h2>📋 Insurance Advice:</h2>
+    <div id="adviceOutput">Please fill in your details and click "Get Insurance Advice".</div>
+
+    <script>
+        document.getElementById("adviceForm").onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch("/get_advice", {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById("adviceOutput").innerText = result.advice;
+        };
+    </script>
+</body>
+</html>

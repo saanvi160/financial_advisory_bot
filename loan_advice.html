@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Advisor Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: auto;
+            padding: 20px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        #adviceOutput {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #4CAF50;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 AI Loan Advisor</h1>
+    <form id="adviceForm">
+        Age: <input type="text" name="age"><br>
+        Occupation: <input type="text" name="occupation"><br>
+        Monthly Income: <input type="text" name="monthly_income"><br>
+        Monthly Expenses: <input type="text" name="monthly_expenses"><br>
+        Current Saving: <input type="text" name="current_saving"><br>
+        Investment Goals: <input type="text" name="investment_goals"><br>
+        Risk Tolerance (1-10): <input type="text" name="risk_tolerance"><br>
+        Item Price: <input type="text" name="item_price"><br>
+        Loan Term (in years): <input type="text" name="loan_term"><br>
+        Interest Rate (%): <input type="text" name="interest_rate"><br>
+        Outstanding Loans: <input type="text" name="outstanding_loans"><br>
+        Credit Score: <input type="text" name="credit_score"><br>
+        <button type="submit">Get Advice</button>
+    </form>
+
+    <h2>📝 Advice:</h2>
+    <div id="adviceOutput">Please fill the form and click "Get Advice".</div>
+
+    <script>
+        document.getElementById("adviceForm").onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch("/get_advice", {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById("adviceOutput").innerText = result.advice;
+        };
+    </script>
+</body>
+</html>
